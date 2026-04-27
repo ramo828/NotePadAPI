@@ -1,0 +1,198 @@
+## 🧠 Alembic nədir?
+
+Alembic = **database dəyişikliklərini idarə edən sistemdir**
+
+Sadə desək:
+
+> Model dəyişirsən → DB-ni silmədən update edirsən
+
+---
+
+## 🚀 1. Quraşdırma
+
+```bash
+pip install alembic
+```
+
+👉 Alembic-i layihəyə əlavə edir
+
+---
+
+## 🏗 2. Layihəni başlatmaq
+
+```bash
+alembic init alembic
+```
+
+👉 Nə edir:
+
+* `alembic/` qovluğu yaradır
+* `alembic.ini` faylı yaradır
+
+---
+
+## ⚙️ 3. Konfiqurasiya
+
+### 📁 alembic.ini
+
+```ini
+sqlalchemy.url = sqlite:///./database.db
+```
+
+👉 DB bağlantısını göstərirsən
+
+---
+
+### 📁 alembic/env.py
+
+```python
+from models import Base
+target_metadata = Base.metadata
+```
+
+👉 Model-ləri Alembic-ə tanıdırsan
+
+---
+
+## 🧾 4. Migration yaratmaq
+
+```bash
+alembic revision --autogenerate -m "ilk migration"
+```
+
+👉 Nə edir:
+
+* Model-ləri yoxlayır
+* DB ilə müqayisə edir
+* dəyişiklik varsa migration faylı yaradır
+
+---
+
+## ⬆️ 5. Migration tətbiq etmək
+
+```bash
+alembic upgrade head
+```
+
+👉 Nə edir:
+
+* Son migration-u DB-yə tətbiq edir
+
+---
+
+## ⬇️ 6. Geri qaytarmaq
+
+```bash
+alembic downgrade -1
+```
+
+👉 Nə edir:
+
+* Son dəyişiklikləri geri alır (1 addım)
+
+---
+
+## 📜 7. Bütün migration tarixçəsi
+
+```bash
+alembic history
+```
+
+👉 Nə edir:
+
+* Bütün migration-ları göstərir
+
+---
+
+## 📌 8. Hal-hazırkı vəziyyət
+
+```bash
+alembic current
+```
+
+👉 Nə edir:
+
+* DB hazırda hansı migration-dadır göstərir
+
+---
+
+## 🔍 9. Revision ID-ləri ilə işləmək
+
+```bash
+alembic upgrade <revision_id>
+```
+
+👉 müəyyən bir versiyaya keçirsən
+
+---
+
+```bash
+alembic downgrade <revision_id>
+```
+
+👉 müəyyən versiyaya geri dönürsən
+
+---
+
+## ⚡ 10. Yeni dəyişiklik əlavə etmək
+
+1. Model dəyişdir:
+
+```python
+age = mapped_column()
+```
+
+2. Migration yarat:
+
+```bash
+alembic revision --autogenerate -m "age əlavə edildi"
+```
+
+3. DB-yə tətbiq et:
+
+```bash
+alembic upgrade head
+```
+
+---
+
+## ⚠️ 11. Vacib qeydlər
+
+* `--autogenerate` hər şeyi düzgün tapmaya bilər
+* Migration faylını yoxla!
+* Production-da DB silinməz ❌
+
+---
+
+## 🧠 12. Sadə məntiq
+
+```text
+Model dəyişir
+   ↓
+Migration yaradılır
+   ↓
+DB update olunur
+```
+
+---
+
+## 🎯 Qısa xülasə
+
+| Komut        | Nə edir           |
+| ------------ | ----------------- |
+| alembic init | layihəni qurur    |
+| revision     | migration yaradır |
+| upgrade      | DB-ni update edir |
+| downgrade    | geri qaytarır     |
+| history      | tarixçə           |
+| current      | cari vəziyyət     |
+
+---
+
+## 🔥 Kafaya qazımalıq
+
+```text
+Alembic = database üçün Git sistemi
+```
+
+---
